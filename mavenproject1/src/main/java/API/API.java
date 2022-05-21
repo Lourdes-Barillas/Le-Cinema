@@ -21,6 +21,7 @@ public class API {
     public List<Actor> listaA = null;
     public List<String> lista = null;
     public List<String> nombresPeliculas = null;
+    public List<Integer> ids = null;
     
     public static String getAPI(String clave) throws UnirestException{
         Unirest.setTimeouts(0, 0);
@@ -97,6 +98,9 @@ public class API {
         listaA = new ArrayList<Actor>();
         lista = new ArrayList<String>();
         nombresPeliculas = new ArrayList<String>();
+        ids = new ArrayList<Integer>();
+        
+        
         String name[] = pActor.split(" ");
         Arbol arbol = new Arbol();
         
@@ -121,11 +125,13 @@ public class API {
         JSONArray known_for = aux.getJSONArray("known_for");
         System.out.println(known_for.length());
         
+        
         for(int i=0; i<(known_for.length());i++){
             JSONObject pelicula = (JSONObject) known_for.get(i);
             Pelicula peli = new Pelicula(pelicula.getString("title"));
             peli.sinopsis = pelicula.get("overview").toString();
             peli.ubicacionPortada = pelicula.get("poster_path").toString();
+            ids.add(pelicula.getInt("id"));
             arbol.insertar(aid, peli);
             this.nombresPeliculas.add(peli.peliculaN);
             this.lista.add(peli.ubicacionPortada);
@@ -168,6 +174,32 @@ public class API {
         listaA = pelicula.cast;
         arbol.preordenA();
         return arbol;
+    }
+    
+    
+    
+    
+    public Pelicula getPelicula(int id) throws UnirestException{
+        Pelicula pelicula = new Pelicula();
+        HttpResponse<String> response;
+        
+        
+        
+        Unirest.setTimeouts(0, 0);
+            response = Unirest.get("https://api.themoviedb.org/3/movie/" + id + "?api_key=1a527a0d4c1a4416c81e4664f92fb8b7&language=en-US")
+              .asString();
+            System.out.println(response.getBody());
+        
+        String jsonTexto = response.getBody();
+        JSONObject jsonO = new JSONObject(jsonTexto);
+        
+        pelicula.peliculaN = jsonO.getString("original_title");
+        pelicula.nombreOriginal = pelicula.peliculaN;
+        
+        pelicula.sinopsis = jsonO.get("overview").toString();
+        pelicula.ubicacionPortada = jsonO.getString("poster_path");
+        System.out.println("Pelicula buscada " + pelicula.peliculaN);
+        return pelicula;
     }
     
     

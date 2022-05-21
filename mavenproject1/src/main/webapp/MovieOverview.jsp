@@ -30,12 +30,15 @@
         
         <%
             String cadena = "https://www.themoviedb.org/t/p/w780";
-            
+            Pelicula pPelicula = null;
             String parametroPeli = request.getParameter("pelicula");
             API api = new API();
             ListaPeliculas lp = api.getData("popular");
-            Pelicula pPelicula = lp.getElement(parametroPeli);
-            
+            pPelicula = lp.getElement(parametroPeli);
+            if(pPelicula==(null)){
+                int id = Integer.parseInt(request.getParameter("pelicula"));
+                pPelicula = api.getPelicula(id);
+            }
 
         %>
         <section id="pantalla-dividida">
@@ -50,36 +53,41 @@
                 <section id="actores">
                     <div class="abajo">
                         <%
-                            String ubicacionImagen = null;
-                            Arbol arbolActores = api.getActorsFMovie(pPelicula.id);
-                            int nparticipantes = api.listaA.size();
-                            if(nparticipantes==5 || nparticipantes>5){
-                                nparticipantes = 5;
-                            }
-                            List<Actor> listaA = api.listaA;
-                            for(int i = 0; i<nparticipantes; i++){
-                                Actor actor = listaA.get(i);
-                                if(actor.profilepicture.equals("null")){
-                                    ubicacionImagen = "IMAGES/person.jpg";
-                                }else{
-                                    ubicacionImagen = cadena + actor.profilepicture;
+                            try{
+                                String ubicacionImagen = null;
+                                Arbol arbolActores = api.getActorsFMovie(pPelicula.id);
+                                int nparticipantes = api.listaA.size();
+                                if(nparticipantes==5 || nparticipantes>5){
+                                    nparticipantes = 5;
                                 }
+                                List<Actor> listaA = api.listaA;
+                                for(int i = 0; i<nparticipantes; i++){
+                                    Actor actor = listaA.get(i);
+                                    if(actor.profilepicture.equals("null")){
+                                        ubicacionImagen = "IMAGES/person.jpg";
+                                    }else{
+                                        ubicacionImagen = cadena + actor.profilepicture;
+                                    }
 
-                        %>
-                        <a href="http://localhost:8090/mavenproject1/ActorOverview.jsp?actorId=<%=actor.id%>">
-                            <botton class="element" id="cuadroActor">
-                                <div class="name">
-                                    <h5 style="color: wheat;"><%=actor.nombre %> </h5>
-                                </div>
-                                <div class="img">
-                                    <img src="<%=ubicacionImagen %>" style="width:100px; height:140px; margin:0px">
-                                </div>
-                            </botton>
-                        </a>
+                            %>
+                            <a href="http://localhost:8090/mavenproject1/ActorOverview.jsp?actorId=<%=actor.id%>">
+                                <botton class="element" id="cuadroActor">
+                                    <div class="name">
+                                        <h5 style="color: wheat;"><%=actor.nombre %> </h5>
+                                    </div>
+                                    <div class="img">
+                                        <img src="<%=ubicacionImagen %>" style="width:100px; height:140px; margin:0px">
+                                    </div>
+                                </botton>
+                            </a>
 
 
-                        <%
+                            <%
 
+                                }
+                           
+                            }catch(Exception e){
+                                System.out.println(e);
                             }
                         %>
                         

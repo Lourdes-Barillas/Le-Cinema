@@ -28,7 +28,8 @@ public class Main {
 //        Arbol arbol = peliculasFromActor("Wendy Finerman", 28);
 //        arbol.preorden();
         //getActorsFMovie(675353);
-        peliculasFromActor("Ben Schwartz", 222121);
+        //peliculasFromActor("Ben Schwartz", 222121);
+        getPelicula(24428);
     }
     public static Actor getActor(int id) throws UnirestException{
         Actor actor = new Actor();
@@ -170,6 +171,32 @@ public class Main {
         return arbol;
     }
     
+    
+    
+    
+    
+    public static Pelicula getPelicula(int id) throws UnirestException{
+        Pelicula pelicula = new Pelicula();
+        HttpResponse<String> response;
+        
+        
+        
+        Unirest.setTimeouts(0, 0);
+            response = Unirest.get("https://api.themoviedb.org/3/movie/" + id + "?api_key=1a527a0d4c1a4416c81e4664f92fb8b7&language=en-US")
+              .asString();
+            System.out.println(response.getBody());
+        
+        String jsonTexto = response.getBody();
+        JSONObject jsonO = new JSONObject(jsonTexto);
+        
+        pelicula.peliculaN = jsonO.getString("original_title");
+        pelicula.nombreOriginal = pelicula.peliculaN;
+        
+        pelicula.sinopsis = jsonO.get("overview").toString();
+        
+        System.out.println("Pelicula buscada " + pelicula.peliculaN);
+        return pelicula;
+    }
     
     
     

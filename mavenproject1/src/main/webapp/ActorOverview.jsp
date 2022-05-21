@@ -49,8 +49,10 @@
                                     String nombre = api.nombresPeliculas.get(i);
                                     %>
                                     <button class="elemento">
+                                        <a href="MovieOverview.jsp?pelicula=<%=api.ids.get(i) %>" style="text-decoration: none">
                                         <h6 style="color: wheat"><%=nombre %></h6>
                                         <img src="<%=cadena + api.lista.get(i) %>" style="width:200px; height:275px; margin:0px">
+                                        </a>
                                     </button>
                                     <%
                                     if(i==api.lista.size() && api.lista.size()==0)
