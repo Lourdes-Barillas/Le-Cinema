@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: black;
+    width: 100%;
+    font-family: arial;
+}
+.contenedor{
+    width: 90%;
+    margin: 15px auto;
+}
+
+.elemento{
+    font-size: 14px;
+    width: 220px;
+    height: 400px;
+    background: #010517;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
+}
+.elemento h6{
+    padding: 10px;
+    font-size: 15px;
+    color: #d5c7ff;
+}
+
+.elemento p{
+    color: white;
+    font-size: 13px;
+}
+.elemento img{
+    width: 100%;
+    padding-top: 10px;
+}

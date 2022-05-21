@@ -1,0 +1,59 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    width: 100%;
+    font-family:sans-serif;
+}
+
+.izquierda{
+    width: 50%;
+    height: 100vh;
+    padding-left: 35px;
+    margin-left: 15px;
+    padding-top: 30px;
+}
+.derecha{
+    width: 50%;
+    height: 100vh;
+    padding-right: 180px;
+    padding-top: 75px;
+    text-justify:inter-word;
+}
+
+#pantalla-dividida{
+    display: flex;
+    background-color: #0b0118;
+}
+
+#actores{
+    background: url(IMAGES/FondoSite1.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.abajo{
+    margin: 0;
+    padding: 0;
+}
+.element{
+    font-size: 14px;
+    width: 100px;
+    height: 150px;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 50px;
+}
+
+.buttons{
+    background-color: #ff0040;
+}
+#cuadroActor{
+    display:grid;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
+}
+.name{
+    width: 90%;
+    margin: 15px auto;
+}
