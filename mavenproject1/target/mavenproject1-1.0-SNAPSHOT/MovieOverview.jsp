@@ -29,14 +29,15 @@
         </header>
         
         <%
+            ListaPeliculas lp = (ListaPeliculas) session.getAttribute("miVariable");
+            int id = 1;
             String cadena = "https://www.themoviedb.org/t/p/w780";
             Pelicula pPelicula = null;
             String parametroPeli = request.getParameter("pelicula");
             API api = new API();
-            ListaPeliculas lp = api.getData("popular");
             pPelicula = lp.getElement(parametroPeli);
             if(pPelicula==(null)){
-                int id = Integer.parseInt(request.getParameter("pelicula"));
+                id = Integer.parseInt(request.getParameter("pelicula"));
                 pPelicula = api.getPelicula(id);
             }
 
@@ -55,6 +56,10 @@
                         <%
                             try{
                                 String ubicacionImagen = null;
+                                
+                                if(pPelicula.id==0)
+                                    pPelicula.id = id; 
+                                
                                 Arbol arbolActores = api.getActorsFMovie(pPelicula.id);
                                 int nparticipantes = api.listaA.size();
                                 if(nparticipantes==5 || nparticipantes>5){
@@ -83,12 +88,12 @@
 
 
                             <%
-
                                 }
                            
                             }catch(Exception e){
                                 System.out.println(e);
                             }
+                            session.setAttribute("listaFromMovieOverview", lp);
                         %>
                         
                     </div>

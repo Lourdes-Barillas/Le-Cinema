@@ -185,7 +185,17 @@ public class Arbol {
      * @param a es el Id del elemento. Ejemplo: ActorId
      */
     
-    
+    public Arbol eliminarActor(Actor a){
+        Arbol arbol = new Arbol();
+        if(listaA.contains(a)){
+            listaA.remove(a);
+        }
+        for(int i = 0; i<listaA.size(); i++){
+            arbol.insertarActor(a.id, a);
+        }
+        
+        return arbol;
+    }
 }
 
 

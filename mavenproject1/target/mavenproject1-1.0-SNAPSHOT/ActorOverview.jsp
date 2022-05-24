@@ -41,7 +41,7 @@
                         try{
                             Arbol arbol = api.peliculasFromActor(actor.nombre, actor.id);
                             List<String> pelis = arbol.preordenS(arbol.raiz);
-                            ListaPeliculas lp = api.getData("popular");
+                            ListaPeliculas lp = (ListaPeliculas) session.getAttribute("listaFromMovieOverview");
                             
                             
                                 for(int i = 0; i<api.lista.size(); i++){

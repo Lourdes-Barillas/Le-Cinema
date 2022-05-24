@@ -143,6 +143,7 @@ public class API {
     
     //Getting their info :3
     public Arbol getActorsFMovie(int idMovie) throws UnirestException{
+        System.out.println(idMovie);
         Actor actor = null;
         Arbol arbol = new Arbol();
         Pelicula pelicula = new Pelicula();

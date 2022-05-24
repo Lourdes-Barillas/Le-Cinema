@@ -33,7 +33,7 @@
             
             String parametroPeli = request.getParameter("pelicula");
             API api = new API();
-            ListaPeliculas lp = api.getData("popular");
+            ListaPeliculas lp = lp = (ListaPeliculas) session.getAttribute("listaFromMovieOverview");
             Pelicula pPelicula = lp.getElement(parametroPeli);
             
 
@@ -58,34 +58,41 @@
         <section id="actores">
             <div class="abajo">
                 <%
-                    String ubicacionImagen = null;
-                    Arbol arbolActores = api.getActorsFMovie(pPelicula.id);
-                    int nparticipantes = api.listaA.size();
-                    List<Actor> listaA = api.listaA;
-                    for(int i = 0; i<nparticipantes; i++){
-                    Actor actor = listaA.get(i);
-                        if(actor.profilepicture.equals("null")){
-                            ubicacionImagen = "IMAGES/person.jpg";
-                        }else{
-                            ubicacionImagen = cadena + actor.profilepicture;
+                    try{
+                        String ubicacionImagen = null;
+                        Arbol arbolActores = api.getActorsFMovie(pPelicula.id);
+                        int nparticipantes = api.listaA.size();
+                        List<Actor> listaA = api.listaA;
+                        for(int i = 0; i<nparticipantes; i++){
+                        Actor actor = listaA.get(i);
+                            if(actor.profilepicture.equals("null")){
+                                ubicacionImagen = "IMAGES/person.jpg";
+                            }else{
+                                ubicacionImagen = cadena + actor.profilepicture;
+                            }
+
+                    %>
+                    <a href="http://localhost:8090/mavenproject1/ActorOverview.jsp?actorId=<%=actor.id%>">
+                        <botton class="element" id="cuadroActor" 
+                                style="padding-right: 10px; padding-left: 15px; padding-bottom: 20px; background-color:#b8b6ba; height: 230px">
+                            <div class="name">
+                                <h5 style="color: #17002e;"><%=actor.nombre %> </h5>
+                            </div>
+                            <div class="img">
+                                <img src="<%=ubicacionImagen %>" style="width:100px; height:120px; margin:0px; color: white">
+                            </div>
+                        </botton>
+                    </a>
+
+
+                    <%
+
                         }
-                        
-                %>
-                <a href="http://localhost:8090/mavenproject1/ActorOverview.jsp?actorId=<%=actor.id%>">
-                    <botton class="element" id="cuadroActor" 
-                            style="padding-right: 10px; padding-left: 15px; padding-bottom: 20px; background-color:#b8b6ba; height: 230px">
-                        <div class="name">
-                            <h5 style="color: #17002e;"><%=actor.nombre %> </h5>
-                        </div>
-                        <div class="img">
-                            <img src="<%=ubicacionImagen %>" style="width:100px; height:120px; margin:0px; color: white">
-                        </div>
-                    </botton>
-                </a>
-
-
-                <%
-
+                    }catch(Exception e){
+                        System.out.println(e);
+                        %>
+                        <h6>Sorry... No more actors</h6>
+                        <%
                     }
                 %>
             <br>    
